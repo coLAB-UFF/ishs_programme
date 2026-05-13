@@ -1136,7 +1136,11 @@
     try {
       const res = await fetch(GH_API, { headers: ghHeaders(false) });
       if (res.status === 404) { currentSHA = null; setSyncStatus(getToken() ? 'synced' : 'notoken'); return; }
-      if (res.status === 401 || res.status === 403) { setSyncStatus('error', 'Token inválido ou sem permissão'); return; }
+      if (res.status === 401 || res.status === 403) {
+        if (getToken()) setSyncStatus('error', 'Token inválido ou sem permissão');
+        else            setSyncStatus('notoken', '○ Configure o token para acessar este repositório');
+        return;
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const file = await res.json();
       currentSHA = file.sha;
