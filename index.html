@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Programa ISHS | coLAB-UFF</title>
+  <title>Weekly Schedule Board</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -502,24 +502,24 @@
   <!-- Error Banner -->
   <div id="error-banner" class="error-banner hidden">
     <span id="error-msg"></span>
-    <button onclick="document.getElementById('error-banner').classList.add('hidden')" aria-label="Fechar">&times;</button>
+    <button onclick="document.getElementById('error-banner').classList.add('hidden')" aria-label="Close">&times;</button>
   </div>
 
   <!-- Board Header -->
   <header class="board-header">
     <div class="header-top">
       <div class="header-titles">
-        <h1 id="board-title" contenteditable="true" spellcheck="false" data-placeholder="Título do Quadro"></h1>
-        <p  id="board-desc"  contenteditable="true" spellcheck="false" data-placeholder="Descrição do quadro..."></p>
+        <h1 id="board-title" contenteditable="true" spellcheck="false" data-placeholder="Board Title"></h1>
+        <p  id="board-desc"  contenteditable="true" spellcheck="false" data-placeholder="Board description..."></p>
         <div class="week-selector">
-          <label>Ano <input type="number" id="sel-year" min="2000" max="2099"></label>
-          <label>Semana <input type="number" id="sel-week" min="1" max="53"></label>
+          <label>Year <input type="number" id="sel-year" min="2000" max="2099"></label>
+          <label>Week <input type="number" id="sel-week" min="1" max="53"></label>
           <span id="week-range-label">—</span>
         </div>
       </div>
       <div class="header-controls">
-        <span id="sync-status" class="sync-status" data-status="loading">⟳ Carregando…</span>
-        <button id="btn-token" class="btn-token" title="Configurar sincronização GitHub">⚙</button>
+        <span id="sync-status" class="sync-status" data-status="loading">⟳ Loading…</span>
+        <button id="btn-token" class="btn-token" title="Configure GitHub sync">⚙</button>
       </div>
     </div>
   </header>
@@ -532,31 +532,31 @@
   <!-- Card Modal -->
   <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
     <div class="modal-box">
-      <button class="modal-close" id="modal-close" aria-label="Fechar">&times;</button>
-      <h2 id="modal-heading">Novo Card</h2>
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h2 id="modal-heading">New Card</h2>
       <form id="card-form" novalidate>
         <div class="form-group">
-          <label for="f-title">Título *</label>
-          <input type="text" id="f-title" required placeholder="Nome da atividade">
+          <label for="f-title">Title *</label>
+          <input type="text" id="f-title" required placeholder="Activity name">
         </div>
         <div class="form-group">
-          <label for="f-location">Local / Ensalamento</label>
-          <input type="text" id="f-location" placeholder="Ex: Sala 301, Auditório B">
+          <label for="f-location">Location / Room</label>
+          <input type="text" id="f-location" placeholder="e.g. Room 301, Auditorium B">
         </div>
         <div class="form-group">
-          <label for="f-participants">Participantes</label>
-          <input type="text" id="f-participants" placeholder="Ex: Alice, Bob, Carol">
+          <label for="f-participants">Participants</label>
+          <input type="text" id="f-participants" placeholder="e.g. Alice, Bob, Carol">
         </div>
         <div class="form-group">
-          <label for="f-desc">Descrição</label>
-          <textarea id="f-desc" placeholder="Breve descrição da atividade..."></textarea>
+          <label for="f-desc">Description</label>
+          <textarea id="f-desc" placeholder="Brief activity description..."></textarea>
         </div>
         <input type="hidden" id="f-id">
         <input type="hidden" id="f-day">
         <input type="hidden" id="f-slot">
         <div class="modal-actions">
-          <button type="button" id="btn-delete" class="btn-danger hidden">Excluir</button>
-          <button type="submit" class="btn-primary">Salvar</button>
+          <button type="button" id="btn-delete" class="btn-danger hidden">Delete</button>
+          <button type="submit" class="btn-primary">Save</button>
         </div>
       </form>
     </div>
@@ -565,46 +565,46 @@
   <!-- Token Modal -->
   <div id="token-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="token-modal-title">
     <div class="modal-box">
-      <button class="modal-close" id="token-modal-close" aria-label="Fechar">&times;</button>
-      <h2 id="token-modal-title">Sincronização com GitHub</h2>
+      <button class="modal-close" id="token-modal-close" aria-label="Close">&times;</button>
+      <h2 id="token-modal-title">GitHub Sync</h2>
       <p class="token-intro">
-        Insira um <strong>Personal Access Token</strong> do GitHub para salvar automaticamente
-        os cards no repositório e acessá-los de qualquer dispositivo.
+        Enter a GitHub <strong>Personal Access Token</strong> to automatically save
+        cards to the repository and access them from any device.
       </p>
-      <div id="token-current-status" class="token-status none">Nenhum token configurado</div>
+      <div id="token-current-status" class="token-status none">No token configured</div>
       <div class="token-field-wrap">
         <input type="password" id="inp-token" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
         <button class="btn-show-token" id="btn-show-token" tabindex="-1">👁</button>
       </div>
       <div class="token-guide">
-        <strong>Como criar um token Fine-grained:</strong>
+        <strong>How to create a Fine-grained token:</strong>
         <ol>
-          <li>Acesse <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com → Settings → Fine-grained tokens</a></li>
-          <li>Em <em>Resource owner</em>, selecione o owner do repositório</li>
-          <li>Em <em>Repository access</em>, escolha <em>Only selected</em> → <code>ishs_programme</code></li>
-          <li>Em <em>Permissions → Contents</em>, selecione <strong>Read and write</strong></li>
-          <li>Gere e cole o token aqui</li>
+          <li>Go to <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com → Settings → Fine-grained tokens</a></li>
+          <li>Under <em>Resource owner</em>, select the repository owner</li>
+          <li>Under <em>Repository access</em>, choose <em>Only selected</em> → <code>ishs_programme</code></li>
+          <li>Under <em>Permissions → Contents</em>, select <strong>Read and write</strong></li>
+          <li>Generate and paste the token here</li>
         </ol>
       </div>
       <div class="modal-actions">
-        <button id="btn-clear-token" class="btn-danger">Remover Token</button>
-        <button id="btn-save-token" class="btn-primary">Salvar e Sincronizar</button>
+        <button id="btn-clear-token" class="btn-danger">Remove Token</button>
+        <button id="btn-save-token" class="btn-primary">Save &amp; Sync</button>
       </div>
     </div>
   </div>
 
   <!-- Embed Panel -->
   <div id="embed-panel" class="embed-panel collapsed">
-    <button id="embed-toggle" class="embed-toggle">&lt;/&gt; Incorporar Quadro</button>
+    <button id="embed-toggle" class="embed-toggle"></> Embed Board</button>
     <div class="embed-body">
-      <p>Gere um iframe estático e somente leitura deste quadro:</p>
+      <p>Generate a static, read-only iframe of this board:</p>
       <div class="embed-fields">
-        <label>Largura (px)<input type="number" id="em-w" value="1100"></label>
-        <label>Altura (px)<input type="number" id="em-h" value="650"></label>
+        <label>Width (px)<input type="number" id="em-w" value="1100"></label>
+        <label>Height (px)<input type="number" id="em-h" value="650"></label>
       </div>
       <textarea id="embed-code" readonly rows="4" spellcheck="false"></textarea>
-      <button id="btn-copy-embed" class="btn-primary" style="width:100%">Copiar Código</button>
-      <p id="embed-note-el" class="embed-note">Tamanho da URL: <span id="url-len">0</span> caracteres</p>
+      <button id="btn-copy-embed" class="btn-primary" style="width:100%">Copy Code</button>
+      <p id="embed-note-el" class="embed-note">URL size: <span id="url-len">0</span> characters</p>
     </div>
   </div>
 
@@ -623,21 +623,21 @@
   ══════════════════════════════════════════════════════════ */
 
   const SLOTS = [
-    { id: 'morning1',     label: 'Manhã — Bloco 1',  time: '08:00–10:00', type: 'work'  },
+    { id: 'morning1',     label: 'Morning — Block 1',  time: '08:00–10:00', type: 'work'  },
     { id: 'coffeebreak1', label: '☕ Coffee Break',   time: '10:00–10:30', type: 'break' },
-    { id: 'morning2',     label: 'Manhã — Bloco 2',  time: '10:30–12:00', type: 'work'  },
-    { id: 'lunch',        label: '🍽 Almoço',         time: '12:00–13:30', type: 'break' },
-    { id: 'afternoon1',   label: 'Tarde — Bloco 1',  time: '13:30–15:30', type: 'work'  },
+    { id: 'morning2',     label: 'Morning — Block 2',  time: '10:30–12:00', type: 'work'  },
+    { id: 'lunch',        label: '🍽 Lunch',         time: '12:00–13:30', type: 'break' },
+    { id: 'afternoon1',   label: 'Afternoon — Block 1',  time: '13:30–15:30', type: 'work'  },
     { id: 'coffeebreak2', label: '☕ Coffee Break',   time: '15:30–16:00', type: 'break' },
-    { id: 'afternoon2',   label: 'Tarde — Bloco 2',  time: '16:00–18:00', type: 'work'  },
-    { id: 'dinner',       label: '🌙 Jantar',         time: '18:00–19:30', type: 'break' },
-    { id: 'night1',       label: 'Noite — Bloco 1',  time: '19:30–21:30', type: 'work'  },
-    { id: 'night2',       label: 'Noite — Bloco 2',  time: '21:30–23:00', type: 'work'  },
+    { id: 'afternoon2',   label: 'Afternoon — Block 2',  time: '16:00–18:00', type: 'work'  },
+    { id: 'dinner',       label: '🌙 Dinner',         time: '18:00–19:30', type: 'break' },
+    { id: 'night1',       label: 'Evening — Block 1',  time: '19:30–21:30', type: 'work'  },
+    { id: 'night2',       label: 'Evening — Block 2',  time: '21:30–23:00', type: 'work'  },
   ];
 
-  const DAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const LS_KEY    = 'wsb-v1';
-  const TOKEN_KEY = 'ishs-programme-gh-token';
+  const TOKEN_KEY = 'programme-gh-token';
   const IS_VIEW_MODE = new URLSearchParams(window.location.search).get('view') === '1';
 
   /* ── GitHub config ── */
@@ -653,8 +653,8 @@
   ══════════════════════════════════════════════════════════ */
 
   let state = {
-    title: 'Programa ISHS',
-    description: 'Programação do evento ISHS | coLAB-UFF',
+    title: 'Weekly Board',
+    description: 'Board description',
     year: currentISOYear(),
     week: currentISOWeek(),
     cards: []
@@ -668,7 +668,7 @@
 
   function saveLS() {
     try { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
-    catch (e) { if (e.name === 'QuotaExceededError') showToast('Armazenamento local cheio.'); }
+    catch (e) { if (e.name === 'QuotaExceededError') showToast('Local storage full.'); }
   }
 
   function loadLS() {
@@ -765,7 +765,7 @@
         c.dataset.slot = slot.id;
         c.dataset.day  = d;
         const btn = el('button', 'add-btn');
-        btn.setAttribute('aria-label', 'Adicionar card');
+        btn.setAttribute('aria-label', 'Add card');
         btn.textContent = '+';
         btn.addEventListener('click', () => openModal(null, d, slot.id));
         c.appendChild(btn);
@@ -788,7 +788,7 @@
 
   function renderDates() {
     const dates = weekDates(state.year, state.week);
-    const fmt   = d => d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+    const fmt   = d => d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', timeZone: 'UTC' });
     dates.forEach((d, i) => {
       const span = document.querySelector(`.day-header[data-day="${i}"] .day-date`);
       if (span) span.textContent = fmt(d);
@@ -838,10 +838,10 @@
     if (span) span.textContent = url.length;
     if (url.length > 2000) {
       note.className = 'embed-note warn';
-      note.textContent = `⚠️ URL com ${url.length} chars — pode não funcionar em alguns navegadores.`;
+      note.textContent = `⚠️ URL with ${url.length} chars — may not work in some browsers.`;
     } else {
       note.className = 'embed-note';
-      note.innerHTML = `Tamanho da URL: <span id="url-len">${url.length}</span> caracteres`;
+      note.innerHTML = `URL size: <span id="url-len">${url.length}</span> characters`;
     }
   }
 
@@ -896,7 +896,7 @@
     if (cardId) {
       const card = state.cards.find(c => c.id === cardId);
       if (!card) return;
-      heading.textContent          = 'Editar Card';
+      heading.textContent          = 'Edit Card';
       form['f-title'].value        = card.title;
       form['f-location'].value     = card.location     || '';
       form['f-participants'].value = card.participants  || '';
@@ -906,7 +906,7 @@
       form['f-slot'].value         = card.slot;
       delBtn.classList.remove('hidden');
     } else {
-      heading.textContent = 'Novo Card';
+      heading.textContent = 'New Card';
       form.reset();
       form['f-id'].value   = '';
       form['f-day'].value  = day;
@@ -954,7 +954,7 @@
 
     document.getElementById('btn-delete').addEventListener('click', () => {
       const id = document.getElementById('f-id').value;
-      if (id && confirm('Excluir este card?')) { deleteCard(id); closeModal(); }
+      if (id && confirm('Delete this card?')) { deleteCard(id); closeModal(); }
     });
   }
 
@@ -981,7 +981,7 @@
     let tT, tD;
     titleEl.addEventListener('input', () => {
       clearTimeout(tT);
-      tT = setTimeout(() => { state.title = titleEl.innerText.trim() || 'Programa ISHS'; saveLS(); renderEmbedCode(); }, 350);
+      tT = setTimeout(() => { state.title = titleEl.innerText.trim() || 'Weekly Board'; saveLS(); renderEmbedCode(); }, 350);
     });
     descEl.addEventListener('input', () => {
       clearTimeout(tD);
@@ -1031,13 +1031,13 @@
       if (navigator.clipboard) {
         navigator.clipboard.writeText(code).then(() => {
           const btn = document.getElementById('btn-copy-embed');
-          btn.textContent = '✓ Copiado!';
-          setTimeout(() => btn.textContent = 'Copiar Código', 2000);
+          btn.textContent = '✓ Copied!';
+          setTimeout(() => btn.textContent = 'Copy Code', 2000);
         });
       } else {
         document.getElementById('embed-code').select();
         document.execCommand('copy');
-        showToast('Código copiado!');
+        showToast('Code copied!');
       }
     });
 
@@ -1060,7 +1060,7 @@
         parsed.cards = (parsed.cards || []).map(c => ({ participants: '', location: '', description: '', ...c }));
         Object.assign(state, parsed);
       } catch (_) {
-        showError('Não foi possível carregar os dados do embed. Exibindo quadro padrão.');
+        showError('Could not load embed data. Showing default board.');
       }
     }
     document.getElementById('app').classList.add('view-mode');
@@ -1115,14 +1115,14 @@
     const h = { 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
     const t = getToken();
     if (t) h['Authorization'] = `Bearer ${t}`;
-    else if (write) throw new Error('Token não configurado');
+    else if (write) throw new Error('Token not configured');
     return h;
   }
 
   function b64Enc(str) { return btoa(unescape(encodeURIComponent(str))); }
   function b64Dec(b64) { return decodeURIComponent(escape(atob(b64))); }
 
-  const STATUS_LABELS = { loading:'⟳ Carregando…', saving:'⏳ Salvando…', pending:'● Pendente', synced:'✓ Sincronizado', error:'✗ Erro', notoken:'○ Sem token' };
+  const STATUS_LABELS = { loading:'⟳ Loading…', saving:'⏅ Saving…', pending:'● Pending', synced:'✓ Synced', error:'✗ Error', notoken:'○ No token' };
   function setSyncStatus(status, msg) {
     const el = document.getElementById('sync-status');
     if (!el) return;
@@ -1137,8 +1137,8 @@
       const res = await fetch(GH_API, { headers: ghHeaders(false) });
       if (res.status === 404) { currentSHA = null; setSyncStatus(getToken() ? 'synced' : 'notoken'); return; }
       if (res.status === 401 || res.status === 403) {
-        if (getToken()) setSyncStatus('error', 'Token inválido ou sem permissão');
-        else            setSyncStatus('notoken', '○ Configure o token para acessar este repositório');
+        if (getToken()) setSyncStatus('error', 'Invalid token or no permission');
+        else            setSyncStatus('notoken', '○ Configure token to access this repository');
         return;
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -1157,7 +1157,7 @@
       setSyncStatus('synced');
     } catch (err) {
       console.warn('GitHub load failed:', err.message);
-      setSyncStatus('error', 'Erro ao carregar do repositório');
+      setSyncStatus('error', 'Error loading from repository');
     }
   }
 
@@ -1169,14 +1169,14 @@
       const body = { message: `Update programme data — ${new Date().toISOString()}`, content: b64Enc(JSON.stringify(state, null, 2)), branch: GH_BRANCH };
       if (currentSHA) body.sha = currentSHA;
       const res = await fetch(GH_API, { method: 'PUT', headers: ghHeaders(true), body: JSON.stringify(body) });
-      if (res.status === 409) { showToast('Conflito detectado. Recarregando…'); await loadFromGitHub(); return; }
+      if (res.status === 409) { showToast('Conflict detected. Reloading…'); await loadFromGitHub(); return; }
       if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.message || `HTTP ${res.status}`); }
       const result = await res.json();
       currentSHA = result.content.sha;
       setSyncStatus('synced');
     } catch (err) {
       console.warn('GitHub save failed:', err.message);
-      setSyncStatus('error', `Erro ao salvar: ${err.message}`);
+      setSyncStatus('error', `Save error: ${err.message}`);
     }
   }
 
@@ -1191,11 +1191,11 @@
     document.getElementById('btn-token').addEventListener('click', () => {
       const hasToken = !!getToken();
       const st = document.getElementById('token-current-status');
-      st.textContent = hasToken ? '✓ Token configurado neste dispositivo' : 'Nenhum token configurado';
+      st.textContent = hasToken ? '✓ Token configured on this device' : 'No token configured';
       st.className = 'token-status ' + (hasToken ? 'ok' : 'none');
       const inp = document.getElementById('inp-token');
       inp.value = '';
-      inp.placeholder = hasToken ? 'Insira um novo token para substituir…' : 'github_pat_…';
+      inp.placeholder = hasToken ? 'Enter a new token to replace…' : 'github_pat_…';
       document.getElementById('token-modal').classList.remove('hidden');
       if (!hasToken) setTimeout(() => inp.focus(), 40);
     });
@@ -1211,17 +1211,17 @@
 
     document.getElementById('btn-save-token').addEventListener('click', async () => {
       const val = document.getElementById('inp-token').value.trim();
-      if (!val) { showToast('Insira o token antes de salvar.'); return; }
+      if (!val) { showToast('Enter a token before saving.'); return; }
       setToken(val);
       closeTokenModal();
-      showToast('Token salvo. Sincronizando…');
+      showToast('Token saved. Syncing…');
       currentSHA = null;
       await loadFromGitHub();
     });
 
     document.getElementById('btn-clear-token').addEventListener('click', () => {
-      if (!confirm('Remover o token? O salvamento automático será desativado.')) return;
-      clearToken(); closeTokenModal(); setSyncStatus('notoken'); showToast('Token removido.');
+      if (!confirm('Remove token? Automatic saving will be disabled.')) return;
+      clearToken(); closeTokenModal(); setSyncStatus('notoken'); showToast('Token removed.');
     });
   }
 
@@ -1252,7 +1252,7 @@
       if (getToken()) {
         loadFromGitHub();
       } else {
-        setSyncStatus('notoken', '○ Configure o token para sincronizar');
+        setSyncStatus('notoken', '○ Configure token to sync');
       }
     } else {
       document.getElementById('sync-status').style.display = 'none';
