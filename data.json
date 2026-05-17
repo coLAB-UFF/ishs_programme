@@ -1,0 +1,53 @@
+{
+  "title": "ISHS 2026",
+  "description": "Programme",
+  "year": 2026,
+  "week": 28,
+  "cards": [
+    {
+      "participants": "Daniel Kuppermann",
+      "location": "Sala Nelson Pereira dos Santos",
+      "description": "",
+      "title": "Keynote 1",
+      "day": 1,
+      "slot": "night1",
+      "id": "a3b8a500-db3d-49f3-a50e-1928f21f636a"
+    },
+    {
+      "participants": "Raúl Pérez",
+      "location": "Auditório ICHF (Bloco P)",
+      "description": "",
+      "title": "Keynote 2",
+      "day": 2,
+      "slot": "night1",
+      "id": "54ecf57a-bcb2-453d-8c11-9ac0d1b80e38"
+    },
+    {
+      "participants": "Porta dos Fundos",
+      "location": "Auditório ICHF (Bloco P)",
+      "description": "",
+      "title": "Roundtable Humor and Gender",
+      "day": 2,
+      "slot": "afternoon2",
+      "id": "a106c7b0-c73e-44eb-a507-72a1a8145f0f"
+    },
+    {
+      "participants": "Elias Saliba",
+      "location": "Online",
+      "description": "",
+      "title": "Pre-Event Keynote",
+      "day": 1,
+      "slot": "afternoon1",
+      "id": "83f75868-698d-477c-8d76-38c9705dcdd3"
+    },
+    {
+      "participants": "Diego Hoefel",
+      "location": "Online",
+      "description": "",
+      "title": "Pre-Event Roundtable Humor and the Global South",
+      "day": 1,
+      "slot": "morning2",
+      "id": "75eddf30-65eb-4d46-b9ff-730ee280f127"
+    }
+  ]
+}
