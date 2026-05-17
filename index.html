@@ -586,6 +586,10 @@
           <li>Generate and paste the token here</li>
         </ol>
       </div>
+      <div id="token-upload-wrap" style="display:none;margin-bottom:12px;">
+        <button id="btn-upload-local" class="btn-primary" style="width:100%;background:var(--accent)">↑ Upload local data to GitHub</button>
+        <p style="font-size:0.74rem;color:var(--text-muted);margin-top:6px;">No data found on GitHub. Click to upload the data currently stored on this device.</p>
+      </div>
       <div class="modal-actions">
         <button id="btn-clear-token" class="btn-danger">Remove Token</button>
         <button id="btn-save-token" class="btn-primary">Save &amp; Sync</button>
@@ -1217,6 +1221,18 @@
       showToast('Token saved. Syncing…');
       currentSHA = null;
       await loadFromGitHub();
+      // If no remote data exists but we have local cards, offer to upload
+      if (currentSHA === null && state.cards.length > 0) {
+        document.getElementById('token-upload-wrap').style.display = 'block';
+        document.getElementById('btn-token').click(); // reopen modal to show button
+      }
+    });
+
+    document.getElementById('btn-upload-local').addEventListener('click', async () => {
+      closeTokenModal();
+      showToast('Uploading local data…');
+      await saveToGitHub();
+      document.getElementById('token-upload-wrap').style.display = 'none';
     });
 
     document.getElementById('btn-clear-token').addEventListener('click', () => {
