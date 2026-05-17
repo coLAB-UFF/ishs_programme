@@ -586,9 +586,9 @@
           <li>Generate and paste the token here</li>
         </ol>
       </div>
-      <div id="token-upload-wrap" style="display:none;margin-bottom:12px;">
-        <button id="btn-upload-local" class="btn-primary" style="width:100%;background:var(--accent)">↑ Upload local data to GitHub</button>
-        <p style="font-size:0.74rem;color:var(--text-muted);margin-top:6px;">No data found on GitHub. Click to upload the data currently stored on this device.</p>
+      <div id="token-upload-wrap" style="display:none;margin-bottom:4px;">
+        <button id="btn-upload-local" class="btn-primary" style="width:100%;background:var(--accent);margin-bottom:6px">↑ Upload local data to GitHub</button>
+        <p style="font-size:0.74rem;color:var(--text-muted);">Sends the data currently on this device to GitHub so other users can access it.</p>
       </div>
       <div class="modal-actions">
         <button id="btn-clear-token" class="btn-danger">Remove Token</button>
@@ -1200,6 +1200,8 @@
       const inp = document.getElementById('inp-token');
       inp.value = '';
       inp.placeholder = hasToken ? 'Enter a new token to replace…' : 'github_pat_…';
+      // Show upload button whenever token is configured
+      document.getElementById('token-upload-wrap').style.display = hasToken ? 'block' : 'none';
       document.getElementById('token-modal').classList.remove('hidden');
       if (!hasToken) setTimeout(() => inp.focus(), 40);
     });
@@ -1221,18 +1223,12 @@
       showToast('Token saved. Syncing…');
       currentSHA = null;
       await loadFromGitHub();
-      // If no remote data exists but we have local cards, offer to upload
-      if (currentSHA === null && state.cards.length > 0) {
-        document.getElementById('token-upload-wrap').style.display = 'block';
-        document.getElementById('btn-token').click(); // reopen modal to show button
-      }
     });
 
     document.getElementById('btn-upload-local').addEventListener('click', async () => {
       closeTokenModal();
       showToast('Uploading local data…');
       await saveToGitHub();
-      document.getElementById('token-upload-wrap').style.display = 'none';
     });
 
     document.getElementById('btn-clear-token').addEventListener('click', () => {
