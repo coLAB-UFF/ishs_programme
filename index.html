@@ -1154,7 +1154,7 @@
       document.getElementById('sel-week').value = state.week;
       document.getElementById('sel-week').max   = isoWeeksInYear(state.year);
       render();
-      setSyncStatus('synced');
+      setSyncStatus(getToken() ? 'synced' : 'notoken', getToken() ? '' : '○ Read-only — configure token to save');
     } catch (err) {
       console.warn('GitHub load failed:', err.message);
       setSyncStatus('error', 'Error loading from repository');
@@ -1249,11 +1249,7 @@
       initEmbed();
       initTokenModal();
 
-      if (getToken()) {
-        loadFromGitHub();
-      } else {
-        setSyncStatus('notoken', '○ Configure token to sync');
-      }
+      loadFromGitHub(); // always load; PAT only required for saving
     } else {
       document.getElementById('sync-status').style.display = 'none';
     }
