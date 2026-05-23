@@ -219,6 +219,15 @@
       "day": 4,
       "slot": "morning2",
       "id": "a6991fb0-c2f4-4a0a-9bbe-d9594be26d73"
+    },
+    {
+      "title": "Humor, Literature, and Satire",
+      "location": "",
+      "participants": "Narayan Bhattarai, Simon Weaver, Gustavo Ottero Gobetti, Hari Prasad Silwal",
+      "description": "",
+      "day": 4,
+      "slot": "morning1",
+      "id": "a6655976-796e-4a46-9f51-49bd57173b81"
     }
   ]
 }
