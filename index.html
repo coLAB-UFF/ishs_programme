@@ -217,6 +217,16 @@
     }
     .card-chip:active { cursor: grabbing; }
     .card-chip.dragging { opacity: 0.38; transform: scale(0.96); }
+    .chip-category {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
     .chip-title { font-weight: 600; color: var(--text-main); font-size: 0.8rem; margin-bottom: 2px; }
     .chip-loc, .chip-ppl, .chip-desc {
       color: var(--text-muted);
@@ -225,6 +235,15 @@
       word-break: break-word;
     }
     .chip-desc { font-style: italic; }
+
+    /* Category picker in modal */
+    .category-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cat-btn {
+      padding: 4px 11px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;
+      cursor: pointer; border: 2px solid transparent; transition: all 0.14s;
+      font-family: var(--font);
+    }
+    .cat-btn.selected { border-color: rgba(0,0,0,0.22) !important; box-shadow: 0 0 0 2px rgba(0,0,0,0.08); }
 
     /* Add button */
     .add-btn {
@@ -539,6 +558,11 @@
           <input type="text" id="f-title" required placeholder="Activity name">
         </div>
         <div class="form-group">
+          <label>Type</label>
+          <div id="f-category-wrap" class="category-picker"></div>
+          <input type="hidden" id="f-category" value="Other">
+        </div>
+        <div class="form-group">
           <label for="f-location">Location / Room</label>
           <input type="text" id="f-location" placeholder="e.g. Room 301, Auditorium B">
         </div>
@@ -639,6 +663,15 @@
   ];
 
   const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const CATEGORIES = {
+    'Keynote':        { bg: '#ede9fe', text: '#5b21b6', border: '#8b5cf6' },
+    'Panel':          { bg: '#fef3c7', text: '#92400e', border: '#f59e0b' },
+    'Remote Session': { bg: '#dbeafe', text: '#1e40af', border: '#3b82f6' },
+    'Roundtable':     { bg: '#d1fae5', text: '#065f46', border: '#10b981' },
+    'Other':          { bg: '#f3f4f6', text: '#4b5563', border: '#9ca3af' },
+  };
+
   const LS_KEY    = 'wsb-v1';
   const TOKEN_KEY = 'programme-gh-token';
   const IS_VIEW_MODE = new URLSearchParams(window.location.search).get('view') === '1';
@@ -679,7 +712,7 @@
       const raw = localStorage.getItem(LS_KEY);
       if (!raw) return;
       const p = JSON.parse(raw);
-      p.cards = (p.cards || []).map(c => ({ participants: '', location: '', description: '', ...c }));
+      p.cards = (p.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', ...c }));
       Object.assign(state, p);
     } catch (_) {}
   }
@@ -814,11 +847,14 @@
     const div = el('div', 'card-chip');
     div.dataset.id  = card.id;
     div.draggable   = !IS_VIEW_MODE;
+    const cat = CATEGORIES[card.category] || CATEGORIES['Other'];
+    div.style.borderLeftColor = cat.border;
     div.innerHTML   =
+      `<span class="chip-category" style="background:${cat.bg};color:${cat.text}">${esc(card.category || 'Other')}</span>` +
       `<div class="chip-title">${esc(card.title)}</div>` +
-      (card.location     ? `<div class="chip-loc">📍 ${esc(card.location)}</div>`          : '') +
-      (card.participants ? `<div class="chip-ppl">👥 ${esc(card.participants)}</div>`       : '') +
-      (card.description  ? `<div class="chip-desc">${esc(card.description)}</div>`          : '');
+      (card.location     ? `<div class="chip-loc">📍 ${esc(card.location)}</div>`    : '') +
+      (card.participants ? `<div class="chip-ppl">👥 ${esc(card.participants)}</div>` : '') +
+      (card.description  ? `<div class="chip-desc">${esc(card.description)}</div>`   : '');
     if (!IS_VIEW_MODE) {
       div.addEventListener('click', e => { e.stopPropagation(); openModal(card.id); });
       div.addEventListener('dragstart', onDragStart);
@@ -891,6 +927,27 @@
      7. MODAL
   ══════════════════════════════════════════════════════════ */
 
+  function buildCategoryPicker(selected) {
+    const wrap = document.getElementById('f-category-wrap');
+    const inp  = document.getElementById('f-category');
+    wrap.innerHTML = '';
+    Object.entries(CATEGORIES).forEach(([name, c]) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cat-btn' + (name === selected ? ' selected' : '');
+      btn.textContent = name;
+      btn.style.background = c.bg;
+      btn.style.color = c.text;
+      btn.addEventListener('click', () => {
+        inp.value = name;
+        wrap.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+      wrap.appendChild(btn);
+    });
+    inp.value = selected;
+  }
+
   function openModal(cardId, day, slot) {
     const overlay  = document.getElementById('modal-overlay');
     const heading  = document.getElementById('modal-heading');
@@ -908,6 +965,7 @@
       form['f-id'].value           = card.id;
       form['f-day'].value          = card.day;
       form['f-slot'].value         = card.slot;
+      buildCategoryPicker(card.category || 'Other');
       delBtn.classList.remove('hidden');
     } else {
       heading.textContent = 'New Card';
@@ -915,6 +973,7 @@
       form['f-id'].value   = '';
       form['f-day'].value  = day;
       form['f-slot'].value = slot;
+      buildCategoryPicker('Other');
       delBtn.classList.add('hidden');
     }
 
@@ -946,6 +1005,7 @@
       const id   = f['f-id'].value;
       const data = {
         title,
+        category:     f['f-category'].value || 'Other',
         location:     f['f-location'].value.trim(),
         participants: f['f-participants'].value.trim(),
         description:  f['f-desc'].value.trim(),
@@ -1061,7 +1121,7 @@
     if (raw) {
       try {
         const parsed = JSON.parse(LZString.decompressFromEncodedURIComponent(raw));
-        parsed.cards = (parsed.cards || []).map(c => ({ participants: '', location: '', description: '', ...c }));
+        parsed.cards = (parsed.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', ...c }));
         Object.assign(state, parsed);
       } catch (_) {
         showError('Could not load embed data. Showing default board.');
@@ -1149,7 +1209,7 @@
       const file = await res.json();
       currentSHA = file.sha;
       const decoded = JSON.parse(b64Dec(file.content.replace(/\n/g, '')));
-      decoded.cards = (decoded.cards || []).map(c => ({ participants:'', location:'', description:'', ...c }));
+      decoded.cards = (decoded.cards || []).map(c => ({ participants:'', location:'', description:'', category:'Other', ...c }));
       Object.assign(state, decoded);
       saveLS();
       document.getElementById('board-title').innerText = state.title;
