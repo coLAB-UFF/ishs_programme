@@ -553,6 +553,17 @@
       "day": 4,
       "slot": "morning1",
       "id": "44347178-9da0-4d57-9241-501e51b55874"
+    },
+    {
+      "title": "Humor and the Right",
+      "category": "Roundtable",
+      "language": "English",
+      "location": "",
+      "participants": "Diego Hoefel",
+      "description": "",
+      "day": 3,
+      "slot": "afternoon1",
+      "id": "99ba1610-9221-4476-b8ee-9d1940b18e00"
     }
   ]
 }
