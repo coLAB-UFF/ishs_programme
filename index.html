@@ -217,7 +217,8 @@
     }
     .card-chip:active { cursor: grabbing; }
     .card-chip.dragging { opacity: 0.38; transform: scale(0.96); }
-    .chip-category {
+    .chip-pills { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 5px; }
+    .chip-category, .chip-lang {
       display: inline-block;
       padding: 1px 7px;
       border-radius: 10px;
@@ -225,8 +226,9 @@
       font-weight: 700;
       letter-spacing: 0.4px;
       text-transform: uppercase;
-      margin-bottom: 5px;
     }
+    .chip-lang { background: #f3f4f6; color: #4b5563; }
+    .chip-pin-icon { width: 9px; height: 12px; vertical-align: middle; margin-right: 2px; flex-shrink: 0; }
     .chip-title { font-weight: 600; color: var(--text-main); font-size: 0.8rem; margin-bottom: 2px; }
     .chip-loc, .chip-ppl, .chip-desc {
       color: var(--text-muted);
@@ -563,6 +565,11 @@
           <input type="hidden" id="f-category" value="Other">
         </div>
         <div class="form-group">
+          <label>Language</label>
+          <div id="f-language-wrap" class="category-picker"></div>
+          <input type="hidden" id="f-language" value="English">
+        </div>
+        <div class="form-group">
           <label for="f-location">Location / Room</label>
           <input type="text" id="f-location" placeholder="e.g. Room 301, Auditorium B">
         </div>
@@ -664,6 +671,8 @@
 
   const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+  const LANGUAGES = ['English', 'Portuguese Only', 'Bilingual/Translation'];
+
   const CATEGORIES = {
     'Keynote':        { bg: '#ede9fe', text: '#5b21b6', border: '#8b5cf6' },
     'Panel':          { bg: '#fce4f4', text: '#c94497', border: '#E960B2' },
@@ -712,7 +721,7 @@
       const raw = localStorage.getItem(LS_KEY);
       if (!raw) return;
       const p = JSON.parse(raw);
-      p.cards = (p.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', ...c }));
+      p.cards = (p.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', language: 'English', ...c }));
       Object.assign(state, p);
     } catch (_) {}
   }
@@ -848,11 +857,16 @@
     div.dataset.id  = card.id;
     div.draggable   = !IS_VIEW_MODE;
     const cat = CATEGORIES[card.category] || CATEGORIES['Other'];
+    const lang = card.language || 'English';
+    const PIN = `<svg class="chip-pin-icon" viewBox="0 0 12 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11C11 2.24 8.76 0 6 0zm0 7.5C4.62 7.5 3.5 6.38 3.5 5S4.62 2.5 6 2.5 8.5 3.62 8.5 5 7.38 7.5 6 7.5z"/></svg>`;
     div.style.borderLeftColor = cat.border;
     div.innerHTML   =
-      `<span class="chip-category" style="background:${cat.bg};color:${cat.text}">${esc(card.category || 'Other')}</span>` +
+      `<div class="chip-pills">` +
+        `<span class="chip-category" style="background:${cat.bg};color:${cat.text}">${esc(card.category || 'Other')}</span>` +
+        `<span class="chip-lang">${esc(lang)}</span>` +
+      `</div>` +
       `<div class="chip-title">${esc(card.title)}</div>` +
-      (card.location     ? `<div class="chip-loc">📍 ${esc(card.location)}</div>`    : '') +
+      (card.location     ? `<div class="chip-loc">${PIN}${esc(card.location)}</div>` : '') +
       (card.participants ? `<div class="chip-ppl">👥 ${esc(card.participants).replace(/\n/g, '<br>')}</div>` : '') +
       (card.description  ? `<div class="chip-desc">${esc(card.description)}</div>`   : '');
     if (!IS_VIEW_MODE) {
@@ -927,6 +941,27 @@
      7. MODAL
   ══════════════════════════════════════════════════════════ */
 
+  function buildLanguagePicker(selected) {
+    const wrap = document.getElementById('f-language-wrap');
+    const inp  = document.getElementById('f-language');
+    wrap.innerHTML = '';
+    LANGUAGES.forEach(name => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cat-btn' + (name === selected ? ' selected' : '');
+      btn.textContent = name;
+      btn.style.background = '#f3f4f6';
+      btn.style.color = '#4b5563';
+      btn.addEventListener('click', () => {
+        inp.value = name;
+        wrap.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+      wrap.appendChild(btn);
+    });
+    inp.value = selected;
+  }
+
   function buildCategoryPicker(selected) {
     const wrap = document.getElementById('f-category-wrap');
     const inp  = document.getElementById('f-category');
@@ -966,6 +1001,7 @@
       form['f-day'].value          = card.day;
       form['f-slot'].value         = card.slot;
       buildCategoryPicker(card.category || 'Other');
+      buildLanguagePicker(card.language  || 'English');
       delBtn.classList.remove('hidden');
     } else {
       heading.textContent = 'New Card';
@@ -974,6 +1010,7 @@
       form['f-day'].value  = day;
       form['f-slot'].value = slot;
       buildCategoryPicker('Other');
+      buildLanguagePicker('English');
       delBtn.classList.add('hidden');
     }
 
@@ -1005,7 +1042,8 @@
       const id   = f['f-id'].value;
       const data = {
         title,
-        category:     f['f-category'].value || 'Other',
+        category:     f['f-category'].value  || 'Other',
+        language:     f['f-language'].value  || 'English',
         location:     f['f-location'].value.trim(),
         participants: f['f-participants'].value.trim(),
         description:  f['f-desc'].value.trim(),
@@ -1121,7 +1159,7 @@
     if (raw) {
       try {
         const parsed = JSON.parse(LZString.decompressFromEncodedURIComponent(raw));
-        parsed.cards = (parsed.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', ...c }));
+        parsed.cards = (parsed.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', language: 'English', ...c }));
         Object.assign(state, parsed);
       } catch (_) {
         showError('Could not load embed data. Showing default board.');
@@ -1209,7 +1247,7 @@
       const file = await res.json();
       currentSHA = file.sha;
       const decoded = JSON.parse(b64Dec(file.content.replace(/\n/g, '')));
-      decoded.cards = (decoded.cards || []).map(c => ({ participants:'', location:'', description:'', category:'Other', ...c }));
+      decoded.cards = (decoded.cards || []).map(c => ({ participants:'', location:'', description:'', category:'Other', language:'English', ...c }));
       Object.assign(state, decoded);
       saveLS();
       document.getElementById('board-title').innerText = state.title;
