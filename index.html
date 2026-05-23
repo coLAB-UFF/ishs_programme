@@ -218,14 +218,13 @@
     .card-chip:active { cursor: grabbing; }
     .card-chip.dragging { opacity: 0.38; transform: scale(0.96); }
     .chip-title { font-weight: 600; color: var(--text-main); font-size: 0.8rem; margin-bottom: 2px; }
-    .chip-loc, .chip-ppl {
+    .chip-loc, .chip-ppl, .chip-desc {
       color: var(--text-muted);
       font-size: 0.68rem;
       margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      word-break: break-word;
     }
+    .chip-desc { font-style: italic; }
 
     /* Add button */
     .add-btn {
@@ -817,8 +816,9 @@
     div.draggable   = !IS_VIEW_MODE;
     div.innerHTML   =
       `<div class="chip-title">${esc(card.title)}</div>` +
-      (card.location     ? `<div class="chip-loc">📍 ${esc(card.location)}</div>`     : '') +
-      (card.participants ? `<div class="chip-ppl">👥 ${esc(card.participants)}</div>` : '');
+      (card.location     ? `<div class="chip-loc">📍 ${esc(card.location)}</div>`          : '') +
+      (card.participants ? `<div class="chip-ppl">👥 ${esc(card.participants)}</div>`       : '') +
+      (card.description  ? `<div class="chip-desc">${esc(card.description)}</div>`          : '');
     if (!IS_VIEW_MODE) {
       div.addEventListener('click', e => { e.stopPropagation(); openModal(card.id); });
       div.addEventListener('dragstart', onDragStart);
