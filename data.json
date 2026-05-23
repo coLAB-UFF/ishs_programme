@@ -165,6 +165,15 @@
       "day": 2,
       "slot": "morning2",
       "id": "5dfe7fc9-55ba-48d1-ac36-f54f26981bc8"
+    },
+    {
+      "title": "Humor and Psychoanalysis",
+      "location": "",
+      "participants": "Jennalee Kitching Donian, Guilherme Ramos Marcondes, Robert Durka",
+      "description": "",
+      "day": 2,
+      "slot": "morning1",
+      "id": "8173bb55-a956-4990-809f-f391c00ac0fc"
     }
   ]
 }
