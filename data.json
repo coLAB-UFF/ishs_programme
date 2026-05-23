@@ -421,6 +421,17 @@
       "day": 5,
       "slot": "afternoon1",
       "id": "ccb74f05-6469-4a50-af53-5751d1652edd"
+    },
+    {
+      "title": "ISHS Board Business Meeting",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 3,
+      "slot": "lunch",
+      "id": "58cebf3b-7815-40c1-abb4-8f89c69cb768"
     }
   ]
 }
