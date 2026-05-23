@@ -50,13 +50,22 @@
       "id": "75eddf30-65eb-4d46-b9ff-730ee280f127"
     },
     {
-      "title": "Brazilian Audiovisual Comedy and Graphic Humor (PT Only)",
-      "location": "",
       "participants": "Iza Debohra Godoi Sepúlveda, Fabiano Liporoni, Karen De Paula Santos, José de Arimatéia Silva Junior",
+      "location": "",
       "description": "",
+      "title": "Brazilian Audiovisual Comedy and Graphic Humor (PT Only)",
       "day": 3,
       "slot": "morning1",
       "id": "97e35ab2-309c-488b-8a29-489f344ecbdc"
+    },
+    {
+      "title": "Comedy and Cinema",
+      "location": "",
+      "participants": "Raphaella de Oliveira Condeixa, Eduardo Katz, Bernardo Fontaniello",
+      "description": "",
+      "day": 3,
+      "slot": "morning2",
+      "id": "039f2f53-0610-4660-b0d1-5b2c5be4e028"
     }
   ]
 }
