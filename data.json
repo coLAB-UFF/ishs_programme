@@ -228,6 +228,15 @@
       "day": 4,
       "slot": "morning1",
       "id": "a6655976-796e-4a46-9f51-49bd57173b81"
+    },
+    {
+      "title": "Humor, Politics, and Entertainment",
+      "location": "",
+      "participants": "Frank Yue Xing, Shuhao Chen, Joaquín Márquez Sabaj, Alékis de Carvalho Moreira, Willian Fernandes Araujo, Beatriz Brandão Polivanov, Viktor Chagas, Mateus Trespach Rolim, Calvin da Silva Cousin, Felipe Moura de Oliveira",
+      "description": "",
+      "day": 4,
+      "slot": "afternoon2",
+      "id": "ae85a757-7c58-4f38-b995-cb6b46c0e0f6"
     }
   ]
 }
