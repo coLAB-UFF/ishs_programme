@@ -476,6 +476,17 @@
       "day": 2,
       "slot": "afternoon1",
       "id": "9d933dea-a511-4bbb-b196-9499c9cda41e"
+    },
+    {
+      "title": "Humor and the Right",
+      "category": "Panel",
+      "language": "English",
+      "location": "",
+      "participants": "William Paik\nBeer Prakken\nBaris Coban, Charlene Clonts\nThiago Costa Lethi\nViktor Chagas, Vinícius Machado Miguel",
+      "description": "",
+      "day": 3,
+      "slot": "morning2",
+      "id": "3a25f30d-484e-4a7c-8273-344e9533621b"
     }
   ]
 }
