@@ -410,6 +410,17 @@
       "day": 5,
       "slot": "morning2",
       "id": "1d99e79e-f673-45b1-b595-49d573f6a751"
+    },
+    {
+      "title": "Farewell Lunch (with Samba)",
+      "category": "Other",
+      "language": "Bilingual/Translation",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 5,
+      "slot": "afternoon1",
+      "id": "ccb74f05-6469-4a50-af53-5751d1652edd"
     }
   ]
 }
