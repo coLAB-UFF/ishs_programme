@@ -641,6 +641,17 @@
       "day": 4,
       "slot": "morning2",
       "id": "33ca80ec-755f-4351-ae11-0dd933509b12"
+    },
+    {
+      "title": "Keynote 3",
+      "category": "Keynote",
+      "language": "English",
+      "location": "",
+      "participants": "Clarissa Diniz\nIsmael Monticelli",
+      "description": "",
+      "day": 3,
+      "slot": "night1",
+      "id": "21be873e-bf44-45db-abd2-66b7e519355f"
     }
   ]
 }
