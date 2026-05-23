@@ -652,6 +652,17 @@
       "day": 3,
       "slot": "night1",
       "id": "21be873e-bf44-45db-abd2-66b7e519355f"
+    },
+    {
+      "title": "Comedy Night",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 3,
+      "slot": "night2",
+      "id": "5dca0e0c-786a-4368-91e8-c4dd27074cd9"
     }
   ]
 }
