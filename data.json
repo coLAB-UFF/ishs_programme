@@ -630,6 +630,17 @@
       "day": 4,
       "slot": "night1",
       "id": "041a8291-cd6d-48fb-8b91-07872448fa1e"
+    },
+    {
+      "title": "Workshop Humor, AI and Music",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 4,
+      "slot": "morning2",
+      "id": "33ca80ec-755f-4351-ae11-0dd933509b12"
     }
   ]
 }
