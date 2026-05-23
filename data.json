@@ -344,6 +344,17 @@
       "day": 3,
       "slot": "afternoon1",
       "id": "9eb2da9f-cba8-4d68-b556-fead47d4d0a6"
+    },
+    {
+      "title": "Humor, Theater, and Performance",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "Giovani Tozi\nAndré Carrico\nGoran Vaage\nMichel Augusto Galiotto da Silva",
+      "description": "",
+      "day": 3,
+      "slot": "morning1",
+      "id": "cb33b966-094a-4059-b850-4643c21f4c52"
     }
   ]
 }
