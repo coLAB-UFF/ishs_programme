@@ -663,6 +663,17 @@
       "day": 3,
       "slot": "night2",
       "id": "5dca0e0c-786a-4368-91e8-c4dd27074cd9"
+    },
+    {
+      "title": "Humor, Journalism, and Mis/Disinformation",
+      "category": "Roundtable",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 3,
+      "slot": "afternoon2",
+      "id": "b32b1400-f9b9-4dc5-b3bf-7f6e20bfe1c0"
     }
   ]
 }
