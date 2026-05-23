@@ -432,6 +432,17 @@
       "day": 3,
       "slot": "lunch",
       "id": "58cebf3b-7815-40c1-abb4-8f89c69cb768"
+    },
+    {
+      "title": "Humor Journal Meeting",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 2,
+      "slot": "lunch",
+      "id": "8c7bca69-a017-43e2-9fc5-1324111f000d"
     }
   ]
 }
