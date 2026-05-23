@@ -48,6 +48,15 @@
       "day": 1,
       "slot": "morning2",
       "id": "75eddf30-65eb-4d46-b9ff-730ee280f127"
+    },
+    {
+      "title": "Brazilian Audiovisual Comedy and Graphic Humor (PT Only)",
+      "location": "",
+      "participants": "Iza Debohra Godoi Sepúlveda, Fabiano Liporoni, Karen De Paula Santos, José de Arimatéia Silva Junior",
+      "description": "",
+      "day": 3,
+      "slot": "morning1",
+      "id": "97e35ab2-309c-488b-8a29-489f344ecbdc"
     }
   ]
 }
