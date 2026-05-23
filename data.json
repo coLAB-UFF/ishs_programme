@@ -346,48 +346,59 @@
       "id": "9eb2da9f-cba8-4d68-b556-fead47d4d0a6"
     },
     {
-      "title": "Humor, Theater, and Performance",
+      "participants": "Giovani Tozi\nAndré Carrico\nGoran Vaage\nMichel Augusto Galiotto da Silva",
+      "location": "",
+      "description": "",
       "category": "Panel",
       "language": "English",
-      "location": "",
-      "participants": "Giovani Tozi\nAndré Carrico\nGoran Vaage\nMichel Augusto Galiotto da Silva",
-      "description": "",
+      "title": "Humor, Theater, and Performance",
       "day": 3,
       "slot": "morning1",
       "id": "cb33b966-094a-4059-b850-4643c21f4c52"
     },
     {
-      "title": "Laughing Against Normativity: Trans, Non-Binary, and Queer Resistance",
+      "participants": "Christina Sanchez Mattson\nPrateek Prateek\nAmber Kempynck",
+      "location": "",
+      "description": "",
       "category": "Panel",
       "language": "English",
-      "location": "",
-      "participants": "Christina Sanchez Mattson\nPrateek Prateek\nAmber Kempynck",
-      "description": "",
+      "title": "Laughing Against Normativity: Trans, Non-Binary, and Queer Resistance",
       "day": 2,
       "slot": "morning1",
       "id": "2b6a61f4-235d-480d-b77b-622e8ebdec90"
     },
     {
-      "title": "Theory and Philosophy of Humor",
+      "participants": "Christine Bruening\nYusuf Al Arief\nMark Ralkowski\nIan Bekker\nJonathan Weidenbaum",
+      "location": "",
+      "description": "",
       "category": "Panel",
       "language": "English",
-      "location": "",
-      "participants": "Christine Bruening\nYusuf Al Arief\nMark Ralkowski\nIan Bekker\nJonathan Weidenbaum",
-      "description": "",
+      "title": "Theory and Philosophy of Humor",
       "day": 4,
       "slot": "afternoon1",
       "id": "fa22f162-feee-4c5b-99d0-267a668cd466"
     },
     {
-      "title": "Humor, Censorship, and Free Speech Adjudication",
+      "participants": "Rebecca Rose Nocella\nSérgio Kezen\nAna Mercedes Pedrazzini\nDennis Meyhoff Brink",
+      "location": "",
+      "description": "",
       "category": "Panel",
       "language": "English",
-      "location": "",
-      "participants": "Rebecca Rose Nocella\nSérgio Kezen\nAna Mercedes Pedrazzini\nDennis Meyhoff Brink",
-      "description": "",
+      "title": "Humor, Censorship, and Free Speech Adjudication",
       "day": 4,
       "slot": "afternoon2",
       "id": "35b96eac-f6b7-4eca-88e3-cfcadf4c96fb"
+    },
+    {
+      "title": "Students Awards",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 5,
+      "slot": "morning1",
+      "id": "a4f263fd-673b-4a84-9d47-65bb642c798d"
     }
   ]
 }
