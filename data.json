@@ -156,6 +156,15 @@
       "day": 3,
       "slot": "afternoon2",
       "id": "7846bb24-6e4c-49cc-b5d4-33e4def21bac"
+    },
+    {
+      "title": "Humor and Literary Culture",
+      "location": "",
+      "participants": "Binod Karki, Anthony Manu, Ana Clara Vizeu Lopes, Raphaella Nasser Rodrigues, Lucía Esperanza Arroyo Penela, Gisele Jordana Eberspächer",
+      "description": "",
+      "day": 2,
+      "slot": "morning2",
+      "id": "5dfe7fc9-55ba-48d1-ac36-f54f26981bc8"
     }
   ]
 }
