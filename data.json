@@ -509,6 +509,17 @@
       "day": 2,
       "slot": "morning1",
       "id": "607ee961-f1a3-466f-87d0-d4626a7253f7"
+    },
+    {
+      "title": "Online Humor",
+      "category": "Panel",
+      "language": "English",
+      "location": "",
+      "participants": "Rujuta Date\nPaul Martin\nIsmet Suleimanov\nDorota Brzozowska, Wladyslaw Chlopicki\nLiisi Laineste",
+      "description": "",
+      "day": 2,
+      "slot": "morning2",
+      "id": "1614b1df-d4b0-4796-b76f-fb50b5f53ae1"
     }
   ]
 }
