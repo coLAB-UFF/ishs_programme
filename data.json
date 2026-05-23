@@ -399,6 +399,17 @@
       "day": 5,
       "slot": "morning1",
       "id": "a4f263fd-673b-4a84-9d47-65bb642c798d"
+    },
+    {
+      "title": "ISHS Annual Meeting",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 5,
+      "slot": "morning2",
+      "id": "1d99e79e-f673-45b1-b595-49d573f6a751"
     }
   ]
 }
