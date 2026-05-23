@@ -465,6 +465,17 @@
       "day": 3,
       "slot": "afternoon2",
       "id": "da40528b-e346-4eb2-9653-84a172bb9ed8"
+    },
+    {
+      "title": "Humor and Artificial Intelligence",
+      "category": "Panel",
+      "language": "English",
+      "location": "",
+      "participants": "Oguzhan Zobar\nGabriela Cecchin Monte Raso\nRob King\nChristian F. Hempelmann, Ori Amir, Willibald Ruch\nVanessa Cristiane Vanzan de Oliveira",
+      "description": "",
+      "day": 2,
+      "slot": "afternoon1",
+      "id": "9d933dea-a511-4bbb-b196-9499c9cda41e"
     }
   ]
 }
