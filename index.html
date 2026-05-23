@@ -124,7 +124,39 @@
       display: grid;
       grid-template-columns: var(--label-w) repeat(7, minmax(155px, 1fr));
       min-width: calc(var(--label-w) + 7 * 155px);
+      position: relative;
     }
+
+    /* ── Special floating cards layer ───────────────────────── */
+    #special-cards-layer {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 15;
+    }
+    .card-chip.special-floating {
+      position: absolute;
+      pointer-events: auto;
+      margin: 0;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.26);
+      border-left-width: 5px;
+      overflow-y: auto;
+      cursor: grab;
+    }
+    .card-chip.special-floating:active { cursor: grabbing; }
+    .chip-timerange {
+      font-size: 0.65rem; font-weight: 700;
+      color: var(--text-muted); margin-bottom: 4px;
+      font-variant-numeric: tabular-nums; letter-spacing: 0.2px;
+    }
+    /* Special slot form */
+    .special-slot-toggle { display: flex; align-items: center; gap: 7px; cursor: pointer; font-size: 0.82rem; font-weight: 500; color: var(--text-main); }
+    .special-slot-toggle input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--primary); cursor: pointer; }
+    .special-time-fields { display: flex; gap: 10px; margin-top: 10px; }
+    .special-time-fields > div { flex: 1; }
+    .special-time-fields label { display: block; font-size: 0.73rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+    .special-time-fields input[type="time"] { width: 100%; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 0.88rem; font-family: var(--font); outline: none; transition: border-color 0.18s; }
+    .special-time-fields input[type="time"]:focus { border-color: var(--primary); }
 
     .cell {
       border-right: 1px solid var(--border);
@@ -549,7 +581,9 @@
 
   <!-- Board Grid (cells injected by JS) -->
   <div class="board-wrapper">
-    <div class="board-grid" id="board-grid"></div>
+    <div class="board-grid" id="board-grid">
+      <div id="special-cards-layer"></div>
+    </div>
   </div>
 
   <!-- Card Modal -->
@@ -587,6 +621,18 @@
         <input type="hidden" id="f-id">
         <input type="hidden" id="f-day">
         <input type="hidden" id="f-slot">
+        <div class="form-group" style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+          <label class="special-slot-toggle">
+            <input type="checkbox" id="f-special-slot">
+            Special Slot — custom time overlay
+          </label>
+          <div id="special-slot-fields" style="display:none">
+            <div class="special-time-fields">
+              <div><label for="f-special-start">Start</label><input type="time" id="f-special-start" value="09:00"></div>
+              <div><label for="f-special-end">End</label><input type="time" id="f-special-end" value="10:00"></div>
+            </div>
+          </div>
+        </div>
         <div class="modal-actions">
           <button type="button" id="btn-delete" class="btn-danger hidden">Delete</button>
           <button type="submit" class="btn-primary">Save</button>
@@ -725,7 +771,7 @@
       const raw = localStorage.getItem(LS_KEY);
       if (!raw) return;
       const p = JSON.parse(raw);
-      p.cards = (p.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', language: 'English', ...c }));
+      p.cards = (p.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', language: 'English', specialSlot: false, specialStart: '', specialEnd: '', ...c }));
       Object.assign(state, p);
     } catch (_) {}
   }
@@ -832,6 +878,7 @@
   function render() {
     renderDates();
     renderCards();
+    renderSpecialCards();
     renderEmbedCode();
   }
 
@@ -849,6 +896,7 @@
   function renderCards() {
     document.querySelectorAll('.card-chip').forEach(c => c.remove());
     state.cards.forEach(card => {
+      if (card.specialSlot) return; // rendered by renderSpecialCards instead
       const cell = document.querySelector(`.slot-cell[data-slot="${card.slot}"][data-day="${card.day}"]`);
       if (!cell) return;
       const chip = buildChip(card);
@@ -865,6 +913,8 @@
     const PIN = `<svg class="chip-pin-icon" viewBox="0 0 12 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 11 5 11s5-7.25 5-11C11 2.24 8.76 0 6 0zm0 7.5C4.62 7.5 3.5 6.38 3.5 5S4.62 2.5 6 2.5 8.5 3.62 8.5 5 7.38 7.5 6 7.5z"/></svg>`;
     div.style.borderLeftColor = cat.border;
     div.innerHTML   =
+      (card.specialSlot && card.specialStart && card.specialEnd
+        ? `<div class="chip-timerange">🕐 ${esc(card.specialStart)}–${esc(card.specialEnd)}</div>` : '') +
       `<div class="chip-pills">` +
         `<span class="chip-category" style="background:${cat.bg};color:${cat.text}">${esc(card.category || 'Other')}</span>` +
         `<span class="chip-lang">${esc(lang)}</span>` +
@@ -879,6 +929,74 @@
       div.addEventListener('dragend',   onDragEnd);
     }
     return div;
+  }
+
+  /* ── Special floating cards ─────────────────────────────── */
+
+  function timeToMin(t) {
+    if (!t) return 0;
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + (m || 0);
+  }
+
+  function buildTimeMap() {
+    const grid = document.getElementById('board-grid');
+    return SLOTS.map(slot => {
+      const cell = grid.querySelector(`.slot-cell[data-slot="${slot.id}"][data-day="0"]`);
+      const parts = slot.time.split('–');
+      return {
+        startMin: timeToMin(parts[0].trim()),
+        endMin:   timeToMin(parts[1].trim()),
+        top:    cell ? cell.offsetTop    : 0,
+        height: cell ? cell.offsetHeight : 0,
+      };
+    });
+  }
+
+  function minutesToPx(min, map) {
+    if (min <= map[0].startMin) return map[0].top;
+    const last = map[map.length - 1];
+    if (min >= last.endMin) return last.top + last.height;
+    for (const s of map) {
+      if (min >= s.startMin && min <= s.endMin) {
+        const frac = (min - s.startMin) / (s.endMin - s.startMin);
+        return s.top + frac * s.height;
+      }
+    }
+    return 0;
+  }
+
+  function renderSpecialCards() {
+    const layer = document.getElementById('special-cards-layer');
+    if (!layer) return;
+    layer.innerHTML = '';
+
+    const specials = state.cards.filter(c => c.specialSlot && c.specialStart && c.specialEnd);
+    if (!specials.length) return;
+
+    const grid   = document.getElementById('board-grid');
+    const map    = buildTimeMap();
+
+    specials.forEach(card => {
+      const startPx = minutesToPx(timeToMin(card.specialStart), map);
+      const endPx   = minutesToPx(timeToMin(card.specialEnd),   map);
+      const h       = Math.max(endPx - startPx, 40);
+
+      const dayHeader = grid.querySelector(`.day-header[data-day="${card.day}"]`);
+      if (!dayHeader) return;
+
+      const chip = buildChip(card);
+      chip.classList.add('special-floating');
+      chip.style.top    = `${startPx + 2}px`;
+      chip.style.left   = `${dayHeader.offsetLeft + 4}px`;
+      chip.style.width  = `${dayHeader.offsetWidth - 10}px`;
+      chip.style.height = `${h - 6}px`;
+
+      if (!IS_VIEW_MODE) {
+        chip.addEventListener('click', e => { e.stopPropagation(); openModal(card.id); });
+      }
+      layer.appendChild(chip);
+    });
   }
 
   function renderEmbedCode() {
@@ -1006,6 +1124,11 @@
       form['f-slot'].value         = card.slot;
       buildCategoryPicker(card.category || 'Other');
       buildLanguagePicker(card.language  || 'English');
+      const isSpecial = !!card.specialSlot;
+      form['f-special-slot'].checked = isSpecial;
+      document.getElementById('special-slot-fields').style.display = isSpecial ? 'block' : 'none';
+      form['f-special-start'].value = card.specialStart || '09:00';
+      form['f-special-end'].value   = card.specialEnd   || '10:00';
       delBtn.classList.remove('hidden');
     } else {
       heading.textContent = 'New Card';
@@ -1015,6 +1138,8 @@
       form['f-slot'].value = slot;
       buildCategoryPicker('Other');
       buildLanguagePicker('English');
+      form['f-special-slot'].checked = false;
+      document.getElementById('special-slot-fields').style.display = 'none';
       delBtn.classList.add('hidden');
     }
 
@@ -1033,6 +1158,10 @@
     });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+    document.getElementById('f-special-slot').addEventListener('change', function () {
+      document.getElementById('special-slot-fields').style.display = this.checked ? 'block' : 'none';
+    });
+
     document.getElementById('card-form').addEventListener('submit', e => {
       e.preventDefault();
       const f = e.target;
@@ -1048,6 +1177,9 @@
         title,
         category:     f['f-category'].value  || 'Other',
         language:     f['f-language'].value  || 'English',
+        specialSlot:  f['f-special-slot'].checked,
+        specialStart: f['f-special-slot'].checked ? f['f-special-start'].value : '',
+        specialEnd:   f['f-special-slot'].checked ? f['f-special-end'].value   : '',
         location:     f['f-location'].value.trim(),
         participants: f['f-participants'].value.trim(),
         description:  f['f-desc'].value.trim(),
@@ -1163,7 +1295,7 @@
     if (raw) {
       try {
         const parsed = JSON.parse(LZString.decompressFromEncodedURIComponent(raw));
-        parsed.cards = (parsed.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', language: 'English', ...c }));
+        parsed.cards = (parsed.cards || []).map(c => ({ participants: '', location: '', description: '', category: 'Other', language: 'English', specialSlot: false, specialStart: '', specialEnd: '', ...c }));
         Object.assign(state, parsed);
       } catch (_) {
         showError('Could not load embed data. Showing default board.');
@@ -1251,7 +1383,7 @@
       const file = await res.json();
       currentSHA = file.sha;
       const decoded = JSON.parse(b64Dec(file.content.replace(/\n/g, '')));
-      decoded.cards = (decoded.cards || []).map(c => ({ participants:'', location:'', description:'', category:'Other', language:'English', ...c }));
+      decoded.cards = (decoded.cards || []).map(c => ({ participants:'', location:'', description:'', category:'Other', language:'English', specialSlot:false, specialStart:'', specialEnd:'', ...c }));
       Object.assign(state, decoded);
       saveLS();
       document.getElementById('board-title').innerText = state.title;
