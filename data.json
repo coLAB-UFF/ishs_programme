@@ -273,6 +273,16 @@
       "day": 3,
       "slot": "afternoon2",
       "id": "2e4b9412-bf98-49a0-820d-2a3ff8e1888d"
+    },
+    {
+      "title": "Humor, Prejudice, and Freedom of Expression (PT Only)",
+      "category": "Other",
+      "location": "",
+      "participants": "Cellina Rodrigues Muniz\nGabriel Pereira Freitas Pinheiro\nLaura Rosa Gomes",
+      "description": "",
+      "day": 2,
+      "slot": "morning2",
+      "id": "4ecbdca2-2131-4d51-a8dc-02f59b5089cf"
     }
   ]
 }
