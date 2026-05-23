@@ -619,6 +619,17 @@
       "day": 2,
       "slot": "morning1",
       "id": "cd8c474c-6e7a-4de7-8e71-060337b4d30d"
+    },
+    {
+      "title": "Workshop Malfeitona",
+      "category": "Other",
+      "language": "English",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 4,
+      "slot": "night1",
+      "id": "041a8291-cd6d-48fb-8b91-07872448fa1e"
     }
   ]
 }
