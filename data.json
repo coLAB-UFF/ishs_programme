@@ -843,6 +843,20 @@
       "day": 2,
       "slot": "afternoon1",
       "id": "4377fa58-d6da-43db-ac02-bb407200cd95"
+    },
+    {
+      "title": "Humor, Image and Culture",
+      "category": "Roundtable",
+      "language": "English",
+      "specialSlot": false,
+      "specialStart": "",
+      "specialEnd": "",
+      "location": "",
+      "participants": "Benjamim Picado\nHéctor Fernández L'Hoeste",
+      "description": "",
+      "day": 3,
+      "slot": "afternoon1",
+      "id": "ee51ab88-d99f-4a6a-a5e6-db82ea0a4b06"
     }
   ]
 }
