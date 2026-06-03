@@ -140,7 +140,7 @@
       margin: 0;
       box-shadow: 0 6px 28px rgba(0,0,0,0.26);
       border-left-width: 5px;
-      overflow-y: auto;
+      overflow: visible;
       cursor: grab;
     }
     .card-chip.special-floating:active { cursor: grabbing; }
@@ -715,7 +715,7 @@
     { id: 'afternoon2',   label: 'Afternoon — Block 2',time: '16:00–17:30', type: 'work'  },
     { id: 'dinner',       label: '🌙 Dinner',          time: '17:30–19:00', type: 'break' },
     { id: 'night1',       label: 'Evening — Block 1',  time: '19:00–20:30', type: 'work'  },
-    { id: 'night2',       label: 'Evening — Block 2',  time: '20:30–22:00', type: 'work'  },
+    { id: 'night2',       label: 'Evening — Block 2',  time: '20:30–21:00', type: 'work'  },
   ];
 
   const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -987,10 +987,11 @@
 
       const chip = buildChip(card);
       chip.classList.add('special-floating');
-      chip.style.top    = `${startPx + 2}px`;
-      chip.style.left   = `${dayHeader.offsetLeft + 4}px`;
-      chip.style.width  = `${dayHeader.offsetWidth - 10}px`;
-      chip.style.height = `${h - 6}px`;
+      chip.style.top       = `${startPx + 2}px`;
+      chip.style.left      = `${dayHeader.offsetLeft + 4}px`;
+      chip.style.width     = `${dayHeader.offsetWidth - 10}px`;
+      chip.style.minHeight = `${h - 6}px`;
+      chip.style.height    = 'auto';
 
       if (!IS_VIEW_MODE) {
         chip.addEventListener('click', e => { e.stopPropagation(); openModal(card.id); });
