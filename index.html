@@ -278,6 +278,7 @@
       color: var(--accent); vertical-align: super;
       font-style: normal; font-variant: normal; text-transform: uppercase;
     }
+    .paren-note { color: #b0b7c3; font-style: italic; }
 
     /* Category picker in modal */
     .category-picker { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1330,9 +1331,11 @@
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 
-  /* Replace (chair) / (Chair) / (CHAIR) with a styled badge */
+  /* Replace (chair) with a badge, then wrap any remaining (…) in gray italic */
   function markChair(s) {
-    return s.replace(/\(chair\)/gi, '<sup class="chair-badge">CHAIR</sup>');
+    return s
+      .replace(/\(chair\)/gi, '<sup class="chair-badge">CHAIR</sup>')
+      .replace(/\([^)]*\)/g, '<span class="paren-note">$&</span>');
   }
 
   function el(tag, cls) {
