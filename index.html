@@ -927,9 +927,9 @@
         `<span class="chip-lang">${esc(lang)}</span>` +
       `</div>` +
       `<div class="chip-title">${markChair(esc(card.title))}</div>` +
+      (card.description  ? `<div class="chip-desc">${markChair(esc(card.description))}</div>`   : '') +
       (card.location     ? `<div class="chip-loc">${PIN}${markChair(esc(card.location))}</div>` : '') +
-      (card.participants ? `<div class="chip-ppl"><span class="chip-ppl-icon">👥</span><span class="chip-ppl-text">${markChair(esc(card.participants)).replace(/\n/g, '<br>')}</span></div>` : '') +
-      (card.description  ? `<div class="chip-desc">${markChair(esc(card.description))}</div>`   : '');
+      (card.participants ? `<div class="chip-ppl"><span class="chip-ppl-icon">👥</span><span class="chip-ppl-text">${markChair(esc(card.participants)).replace(/\n/g, '<br>')}</span></div>` : '');
     if (!IS_VIEW_MODE) {
       div.addEventListener('click', e => { e.stopPropagation(); openModal(card.id); });
       div.addEventListener('dragstart', onDragStart);
