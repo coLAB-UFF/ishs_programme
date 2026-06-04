@@ -272,6 +272,11 @@
     .chip-ppl-icon { flex-shrink: 0; line-height: 1.4; }
     .chip-ppl-text { flex: 1; }
     .chip-desc { font-style: italic; }
+    .chair-badge {
+      font-size: 0.55em; font-weight: 700; letter-spacing: 0.6px;
+      color: var(--accent); vertical-align: super;
+      font-style: normal; font-variant: normal; text-transform: uppercase;
+    }
 
     /* Category picker in modal */
     .category-picker { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -919,10 +924,10 @@
         `<span class="chip-category" style="background:${cat.bg};color:${cat.text}">${esc(card.category || 'Other')}</span>` +
         `<span class="chip-lang">${esc(lang)}</span>` +
       `</div>` +
-      `<div class="chip-title">${esc(card.title)}</div>` +
-      (card.location     ? `<div class="chip-loc">${PIN}${esc(card.location)}</div>` : '') +
-      (card.participants ? `<div class="chip-ppl"><span class="chip-ppl-icon">👥</span><span class="chip-ppl-text">${esc(card.participants).replace(/\n/g, '<br>')}</span></div>` : '') +
-      (card.description  ? `<div class="chip-desc">${esc(card.description)}</div>`   : '');
+      `<div class="chip-title">${markChair(esc(card.title))}</div>` +
+      (card.location     ? `<div class="chip-loc">${PIN}${markChair(esc(card.location))}</div>` : '') +
+      (card.participants ? `<div class="chip-ppl"><span class="chip-ppl-icon">👥</span><span class="chip-ppl-text">${markChair(esc(card.participants)).replace(/\n/g, '<br>')}</span></div>` : '') +
+      (card.description  ? `<div class="chip-desc">${markChair(esc(card.description))}</div>`   : '');
     if (!IS_VIEW_MODE) {
       div.addEventListener('click', e => { e.stopPropagation(); openModal(card.id); });
       div.addEventListener('dragstart', onDragStart);
@@ -1322,6 +1327,11 @@
     return String(s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;')
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  /* Replace (chair) / (Chair) / (CHAIR) with a styled badge */
+  function markChair(s) {
+    return s.replace(/\(chair\)/gi, '<sup class="chair-badge">CHAIR</sup>');
   }
 
   function el(tag, cls) {
