@@ -1009,24 +1009,16 @@
 
   function renderEmbedCode() {
     if (IS_VIEW_MODE) return;
-    const ta  = document.getElementById('embed-code');
+    const ta   = document.getElementById('embed-code');
     const note = document.getElementById('embed-note-el');
     if (!ta || !note) return;
-    const encoded = LZString.compressToEncodedURIComponent(JSON.stringify(state));
-    const base    = window.location.href.split('?')[0];
-    const url     = `${base}?view=1&data=${encoded}`;
+    const base = window.location.href.split('?')[0];
+    const url  = `${base}?view=1`;          // data is loaded live from GitHub
     const w = document.getElementById('em-w').value || 1100;
     const h = document.getElementById('em-h').value || 650;
     ta.value = `<iframe src="${url}" width="${w}" height="${h}" frameborder="0" style="border:none;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)"></iframe>`;
-    const span = document.getElementById('url-len');
-    if (span) span.textContent = url.length;
-    if (url.length > 2000) {
-      note.className = 'embed-note warn';
-      note.textContent = `⚠️ URL with ${url.length} chars — may not work in some browsers.`;
-    } else {
-      note.className = 'embed-note';
-      note.innerHTML = `URL size: <span id="url-len">${url.length}</span> characters`;
-    }
+    note.className = 'embed-note';
+    note.innerHTML = `URL size: <span id="url-len">${url.length}</span> characters`;
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -1513,6 +1505,7 @@
       loadFromGitHub(); // always load; PAT only required for saving
     } else {
       document.getElementById('sync-status').style.display = 'none';
+      loadFromGitHub(); // load live data from GitHub for view/embed mode
     }
   });
 
