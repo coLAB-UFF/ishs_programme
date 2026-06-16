@@ -843,6 +843,20 @@
       "day": 3,
       "slot": "afternoon2",
       "id": "ee51ab88-d99f-4a6a-a5e6-db82ea0a4b06"
+    },
+    {
+      "title": "ISHS Lifetime Achievement",
+      "category": "Other",
+      "language": "English",
+      "specialSlot": true,
+      "specialStart": "11:00",
+      "specialEnd": "12:30",
+      "location": "",
+      "participants": "",
+      "description": "",
+      "day": 5,
+      "slot": "morning2",
+      "id": "04721337-f3d2-4429-b120-2c6c6dcbbdaa"
     }
   ]
 }
