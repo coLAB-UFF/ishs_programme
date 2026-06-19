@@ -159,7 +159,7 @@
       "id": "af4ce70e-bd90-4906-b8d6-874548029da3"
     },
     {
-      "participants": "Natália Ayrosa (UFF), Mayka Castellano (UFF) (chair), Tatiane Leal (UFRJ)\nIngrid de Nonno Ishihara (PUC-Rio)\nShaban Darakchi (Slovak Academy of Sciences)",
+      "participants": "Natália Ayrosa (UFF), Mayka Castellano (UFF), Tatiane Leal (UFRJ)\nIngrid de Nonno Ishihara (PUC-Rio)\nShaban Darakchi (Slovak Academy of Sciences) (chair)",
       "location": "",
       "description": "",
       "category": "Panel",
@@ -803,15 +803,15 @@
       "id": "ee51ab88-d99f-4a6a-a5e6-db82ea0a4b06"
     },
     {
-      "title": "ISHS Lifetime Achievement + ISHS Annual Meeting",
+      "participants": "",
+      "location": "Auditorium ICHF (Block O)",
+      "description": "",
       "category": "Other",
       "language": "English",
       "specialSlot": true,
       "specialStart": "11:30",
       "specialEnd": "14:00",
-      "location": "Auditorium ICHF (Block O)",
-      "participants": "",
-      "description": "",
+      "title": "ISHS Lifetime Achievement + ISHS Annual Meeting",
       "day": 5,
       "slot": "morning2",
       "id": "04721337-f3d2-4429-b120-2c6c6dcbbdaa"
