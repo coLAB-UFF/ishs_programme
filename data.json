@@ -815,6 +815,20 @@
       "day": 5,
       "slot": "morning2",
       "id": "04721337-f3d2-4429-b120-2c6c6dcbbdaa"
+    },
+    {
+      "title": "Film Screening",
+      "category": "Remote Session",
+      "language": "English",
+      "specialSlot": false,
+      "specialStart": "",
+      "specialEnd": "",
+      "location": "",
+      "participants": "Henrique Pessoa (Director)\nJoão Paulo Capelotti (Mediator)",
+      "description": "Nasrudin, the Fabulous (34min)",
+      "day": 1,
+      "slot": "morning2",
+      "id": "6818c9cc-475f-48e9-92fd-a65e701491d1"
     }
   ]
 }
