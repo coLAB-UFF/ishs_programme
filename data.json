@@ -131,7 +131,7 @@
       "id": "7a8ec9c4-b702-4e6c-9947-a29fd15869b9"
     },
     {
-      "participants": "Myllena Araújo do Nascimento (UFSCar)\nMaria Eduarda de Carvalho Silva (UFMG), Bruna Silveira Martins de Oliveira (UFMG)\nBeer Prakken\nDick Zijp (Utrecht University) (chair)\nIvanildo Carvalho dos Santos (UFF)",
+      "participants": "Myllena Araújo do Nascimento (UFSCar)\nMaria Eduarda de Carvalho Silva (UFMG), Bruna Silveira Martins de Oliveira (UFMG)\nBeer Prakken (University of Groningen)\nDick Zijp (Utrecht University) (chair)\nIvanildo Carvalho dos Santos (UFF)",
       "location": "Room J11D",
       "description": "",
       "category": "Panel",
@@ -817,15 +817,15 @@
       "id": "04721337-f3d2-4429-b120-2c6c6dcbbdaa"
     },
     {
-      "title": "Pre-Event Film Screening (and Q&A)",
+      "participants": "Henrique Pessoa (Director)\nJoão Paulo Capelotti (Mediator)",
+      "location": "",
+      "description": "Nasrudin, the Fabulous (34min)",
       "category": "Remote Session",
       "language": "English",
       "specialSlot": false,
       "specialStart": "",
       "specialEnd": "",
-      "location": "",
-      "participants": "Henrique Pessoa (Director)\nJoão Paulo Capelotti (Mediator)",
-      "description": "Nasrudin, the Fabulous (34min)",
+      "title": "Pre-Event Film Screening (and Q&A)",
       "day": 1,
       "slot": "morning2",
       "id": "6818c9cc-475f-48e9-92fd-a65e701491d1"
